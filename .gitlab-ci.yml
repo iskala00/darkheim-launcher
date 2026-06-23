@@ -10,24 +10,13 @@ sync_to_github:
   before_script:
     - apk add --no-cache git openssh ca-certificates
   script:
-    - git fetch origin build --tags
-    - git checkout -B build origin/build
+    - git fetch origin main --tags
+    - git checkout -B main origin/main
 
     - git remote remove github 2>/dev/null || true
     - git remote add github "https://x-access-token:${GITHUB_TOKEN}@github.com/iskala00/installer.git"
 
-    - git push --force-with-lease github build:main
+    - git push --force-with-lease github main:main
     - git push github --tags
-
-    - |
-      if git ls-remote --exit-code --heads origin main >/dev/null 2>&1; then
-        git fetch origin main
-        git push --force-with-lease github refs/remotes/origin/main:refs/heads/dev
-      else
-        echo "GitLab main branch does not exist, skip GitHub dev sync"
-      fi
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-  needs:
-    - job: version_bump
-      optional: true
