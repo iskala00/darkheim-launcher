@@ -17,7 +17,7 @@ version_bump:
     - bun install --frozen-lockfile
     - bun run release
   rules:
-    - if: '$CI_COMMIT_BRANCH == "build"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
       when: manual
 
 sync_to_github:
