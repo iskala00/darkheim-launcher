@@ -99,10 +99,10 @@ async fn launch_inner(
         found
     } else {
         set_phase(&phase, "downloading_java");
-        let tar_path = java::download_java(counters.clone()).await?;
+        let archive_path = java::download_java(counters.clone()).await?;
         set_phase(&phase, "installing");
-        java::extract_java(&tar_path, &java::java_dir()).await?;
-        tokio::fs::remove_file(&tar_path).await.ok();
+        java::extract_java(&archive_path, &java::java_dir()).await?;
+        tokio::fs::remove_file(&archive_path).await.ok();
         java::find_java_executable(&java::java_dir())
             .ok_or("Java executable not found after extraction")?
     };
