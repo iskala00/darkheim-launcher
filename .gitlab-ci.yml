@@ -14,7 +14,7 @@ sync_to_github:
     - git checkout -B main origin/main
 
     - git remote remove github 2>/dev/null || true
-    - git remote add github "https://x-access-token:${GITHUB_TOKEN}@github.com/iskala00/installer.git"
+    - git remote add github "https://x-access-token:${GITHUB_TOKEN}@github.com/iskala00/darkheim-launcher.git"
 
     - git push --force-with-lease github main:main
     - git push github --tags
