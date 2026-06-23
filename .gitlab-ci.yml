@@ -45,4 +45,5 @@ sync_to_github:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   needs:
-    - version_bump
+    - job: version_bump
+      optional: true
