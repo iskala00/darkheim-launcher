@@ -1,3 +1,5 @@
+use std::env;
+
 pub struct SftpCredentials {
     pub host: String,
     pub port: u16,
@@ -10,14 +12,17 @@ pub fn load_sftp_credentials() -> Result<SftpCredentials, String> {
     let _ = dotenvy::from_path("../.env").or_else(|_| dotenvy::from_path(".env"));
 
     let host = option_env!("SFTP_HOST")
-        .ok_or("SFTP_HOST not set")?
-        .to_string();
+        .map(|v| v.to_string())
+        .or_else(|| env::var("SFTP_HOST").ok())
+        .ok_or("SFTP_HOST not set")?;
     let user = option_env!("SFTP_USER")
-        .ok_or("SFTP_USER not set")?
-        .to_string();
+        .map(|v| v.to_string())
+        .or_else(|| env::var("SFTP_USER").ok())
+        .ok_or("SFTP_USER not set")?;
     let password = option_env!("SFTP_PASSWORD")
-        .ok_or("SFTP_PASSWORD not set")?
-        .to_string();
+        .map(|v| v.to_string())
+        .or_else(|| env::var("SFTP_PASSWORD").ok())
+        .ok_or("SFTP_PASSWORD not set")?;
 
     let (host, port) = parse_sftp_host(&host)?;
     Ok(SftpCredentials {
