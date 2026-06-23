@@ -1,24 +1,8 @@
 stages:
-  - prepare
   - publish
 
 variables:
   GIT_DEPTH: "0"
-
-version_bump:
-  stage: prepare
-  image: node:lts-alpine
-  before_script:
-    - apk add --no-cache git openssh
-    - npm install -g bun
-  script:
-    - git config --global user.name "GitLab CI"
-    - git config --global user.email "ci@gitlab.com"
-    - bun install --frozen-lockfile
-    - bun run release
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: manual
 
 sync_to_github:
   stage: publish
