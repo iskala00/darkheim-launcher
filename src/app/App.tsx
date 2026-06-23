@@ -2,6 +2,7 @@ import { CircleFill } from "@gravity-ui/icons";
 import { LaunchPanel } from "@/components/LaunchPanel";
 import Footer from "@/components/layouts/footer/Footer";
 
+import "@fontsource/spectral-sc";
 import "./styles/global.css";
 import "./styles/main.scss";
 
